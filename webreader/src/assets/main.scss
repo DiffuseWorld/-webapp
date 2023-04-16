@@ -1,0 +1,22 @@
+@use "sass:math";
+@import '/font/cabin.css';/*导入所有public目录下的字体文件，注意，字体css文件有一个解码范围,它标注你使用某些语言或文字时，哪些可以生效，哪些不可以生效*/
+@import '/font/daysOne.css';
+@import '/font/montserrat.css';
+@import '/font/tangerine.css';
+
+
+html,body{
+    width: 100%;
+    height: 100%;
+    user-select: none;//禁用用户进行长按操作
+    overflow: hidden;
+    font-family:'PingFangSC-Light','PingFang SC','STHeitiSC-Light','Helvetica-Light','Arial','sans-serif';
+}
+
+$ratio:math.div(375,10);
+
+@function px2rem($px){
+   @return math.div($px,$ratio) + rem;
+}
+
+
