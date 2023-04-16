@@ -3,3 +3,26 @@
     justify-content: center;
     align-items: center;
 }
+
+
+// 设置栏的的通用样式
+.setting-wrapper{
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 100px;
+    background-color: #fff;
+    z-index: 101;
+    box-shadow: 0 -8px 8px rgba(0,0,0,.15);
+    bottom: 92px;
+
+    &.setting-menu-enter-to,&.setting-menu-leave-from{
+        transform: translate3d(0,0,0)
+    }
+    &.setting-menu-enter-active,&.setting-menu-leave-active{
+        transition: all .3s linear;
+    }
+    &.setting-menu-enter-from,&.setting-menu-leave-to{
+        transform: translate3d(0,192px,0);
+    }
+ }

@@ -18,7 +18,9 @@
     "pinia": "^2.0.32",
     "postcss-pxtorem": "^6.0.0",
     "vue": "^3.2.47",
-    "vue-router": "^4.1.6"
+    "vue-i18n": "^9.3.0-beta.17",
+    "vue-router": "^4.1.6",
+    "web-storage-cache": "^1.1.1"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.2.0",

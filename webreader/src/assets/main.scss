@@ -10,11 +10,10 @@ html,body{
     height: 100%;
     user-select: none;//禁用用户进行长按操作
     overflow: hidden;
-    font-family:'PingFangSC-Light','PingFang SC','STHeitiSC-Light','Helvetica-Light','Arial','sans-serif';
+    font-family:'PingFangSC-Light','PingFang SC','STHeitiSC-Light','Helvetica-Light','Arial','sans-serif';// 设置安全字体
 }
 
 $ratio:math.div(375,10);
-
 @function px2rem($px){
    @return math.div($px,$ratio) + rem;
 }

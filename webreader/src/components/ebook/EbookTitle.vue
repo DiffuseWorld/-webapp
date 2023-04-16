@@ -1,10 +1,14 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import {useRouter} from 'vue-router'
+import {useBook} from '@/stores'
+
+
 type IProps={
-    isShow:boolean
+    
 }
 const router=useRouter()
+const bookStore=useBook()
 
 /**
  * 退出键
@@ -14,12 +18,12 @@ const rego = () => {
 }
 
 
-const props=defineProps<IProps>()
+
 </script>
 
 <template>
     <Transition name="slide-title">
-        <div class="title-wrapper" v-show="isShow">
+        <div class="title-wrapper" v-show="bookStore.isShow">
             <div class="left" @click="rego">
                 <div class="icon-back">
                     
@@ -84,5 +88,5 @@ const props=defineProps<IProps>()
     &.slide-title-enter-to,&.slide-title-leave-from{
         transform: translate3d(0,0,0);
     }
-
-}</style>
+}
+</style>
