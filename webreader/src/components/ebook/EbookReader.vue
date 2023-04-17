@@ -6,7 +6,14 @@ import { useBook } from '@/stores'
 import EbookMenu from './EbookMenu.vue'
 import EbookTitle from './EbookTitle.vue'
 import EbookSettingFontPopup from './EbookSettingFontPopup.vue'
-import { setFontFamily, getFontFamily, getFontSize, setFontSize } from '@/utils'
+import { setFontFamily, getFontFamily, getFontSize, setFontSize,getTheme,setTheme,initStyle } from '@/utils'
+import EbookSettingThemes from './EbookSettingThemes.vue'
+import {themeList} from './canstains/font'
+import {removeAll} from '@/utils'
+import EbookSettingProgress from './EbookSettingProgress.vue'
+import {useRefreshLocation,useGetLocationHistory,useFlatten} from './hooks/refreshLocation'
+import EbookSlide from './EbookSlide.vue'
+import type { PackagingMetadataObject } from 'epubjs/types/packaging'
 
 const route = useRoute()
 const bookStore = useBook()
@@ -62,6 +69,18 @@ const initEpub = () => {
             bookStore.defauletFontsize=getFontSize(bookStore.filename)
             bookStore.currentbook?.rendition.themes.fontSize(fontSzie+'px')
         }
+        initTheme() // 必须在getTheme前执行，不然的话无法访问到对应的主题
+        
+        let theme=getTheme(bookStore.filename)
+        if(!theme){
+            setTheme(bookStore.filename,bookStore.defaultTheme)
+        }else{
+            bookStore.defaultTheme=theme
+            bookStore.currentbook?.rendition.themes.select(theme)
+        }
+        removeAll()
+        initStyle()
+        initBookProgress()
     })
     // 监听开始触摸的事件，主要记录x坐标值和时间戳
     renditon.value.on('touchstart', (e: any) => {
@@ -93,6 +112,7 @@ const initEpub = () => {
                 console.log('加载出错，请检查网络')
             })
         })
+        
         // e.preventDefault()
         e.stopPropagation()
     })
@@ -117,6 +137,48 @@ const reSetting = () => {
     bookStore.settingVisable = -1
     bookStore.fontFamilyVisable = false
 }
+const initTheme=()=>{
+    themeList().forEach(i=>{
+        bookStore.currentbook?.rendition.themes.register(i.name,i.style)
+    })
+    bookStore.currentbook?.rendition.themes.select(bookStore.defaultTheme)
+}
+const initBookProgress=()=>{
+    bookStore.currentbook?.ready.then(()=>{
+        return bookStore.currentbook?.locations.generate(750*(window.innerWidth/375)*(bookStore.defauletFontsize/16))//根据指定算法分页
+    }).then((locations)=>{
+        bookStore.bookAvailable=true
+        useGetLocationHistory() // 注意，必须要等到epub分页完成后才可以设置进度条
+        parseBook()
+    })
+}
+const parseBook=()=>{
+    bookStore.currentbook?.loaded.cover.then((cover:any)=>{
+        bookStore.currentbook?.archive.createUrl(cover,{base64:true}).then((url)=>{
+            bookStore.cover=url
+            console.log(bookStore.cover)
+        })
+        bookStore.currentbook?.loaded.metadata.then((metadata:PackagingMetadataObject)=>{
+            bookStore.metadata=metadata
+        })
+        // 获取电子书的目录以及目录层级
+        bookStore.currentbook?.loaded.navigation.then(({toc}:any)=>{
+            // 数组扁平化，更好操作数据
+            let navigation = useFlatten(toc)
+            // 获取目录级别，比如说一级目录或者二级目录
+            const find=(item:any,lava:number=0):number=>{
+                if(!item.parent){
+                    return lava
+                }else{
+                    return find(navigation.filter(preitem=>preitem.parent===item.id),++lava)
+                }
+            }
+            navigation.forEach(i=>{
+                i.lava=find(i)
+            })
+        })
+    })
+}
 </script>
 
 <template>
@@ -127,6 +189,9 @@ const reSetting = () => {
     </div>
     <EbookMenu />
     <EbookSettingFontPopup />
+    <EbookSettingThemes/>
+    <EbookSettingProgress/>
+    <EbookSlide/>
 </template>
 
 <style scoped lang="scss">

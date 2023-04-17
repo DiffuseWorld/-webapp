@@ -26,3 +26,8 @@
         transform: translate3d(0,192px,0);
     }
  }
+
+ .fade-slide-right-enter-from,.fade-slide-right-leave-to{
+    transform: translate(-100%,0,0);
+    opacity: 0;
+ }

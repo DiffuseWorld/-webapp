@@ -11,10 +11,8 @@ const selectFont=(n:number)=>{
     bookStore.defauletFontsize=n
     setFontsize1()
 }
-
 const setFontsize1=()=>{
     bookStore.currentbook?.rendition.themes.fontSize(bookStore.defauletFontsize+'px')
-    console.log(bookStore.filename)
     setFontSize(bookStore.filename,bookStore.defauletFontsize)
 }
 const showFontFamilyPopup = () =>{
@@ -54,7 +52,7 @@ const showFontFamilyPopup = () =>{
                 </div>
                 <div class="setting-font-family-icon-wrapper">
                     <span class="icon-forward">
-
+                        
                     </span>
                 </div>
             </div>

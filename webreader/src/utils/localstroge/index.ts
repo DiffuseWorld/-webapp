@@ -58,3 +58,27 @@ export const setLocale=(locale:string)=>{
 export const getLocale=()=>{
     return getLocalstorage('locale')
 }
+
+export const getTheme=(filename:string)=>{
+    return getBookObject(filename, 'bookTheme')
+}
+
+export const setTheme=(filname:string,value:any)=>{
+    return setBookObject(filname,'bookTheme',value)
+}
+
+export const saveLocation=(filename:string,location:any)=>{
+    setBookObject(filename,'location',location)
+}
+
+export const getLocation=(filename:string)=>{
+    return getBookObject(filename,'location')
+} 
+
+export const getReadTime=(filename:string)=>{
+    return getBookObject(filename,'readtime')
+}
+
+export const saveReadTime=(filename:string,value:any)=>{
+    return setBookObject(filename,'readtime',value)
+}

@@ -9,6 +9,7 @@ type IProps={
 const bookStore=useBook()
 
 const showContent=(n:number)=>{
+    console.log('当前是',n)
     if(n===bookStore.settingVisable){
         bookStore.settingVisable=-1
         return
@@ -16,27 +17,6 @@ const showContent=(n:number)=>{
     bookStore.settingVisable=n
 }
 
-/* const toggleSettingMenu=()=>{
-    isShowSettingMenu.value=!isShowSettingMenu.value
-} */
-
-/* const showContent=(n:number)=>{
-    settingIndex.value=n
-    // 当设置栏打开时，只切换设置栏的内容，不关闭设置栏
-    if(isShowSettingMenu.value){
-        return
-    }
-    toggleSettingMenu()
-} */
-/**
- * 使用watchEffect可以监听state，如果state改变，那么可以执行一些副作用
- */
-/* watchEffect(()=>{
-    if(!bookStore.isShow){
-        // 关闭上下栏的时候，顺便关闭设置栏
-        isShowSettingMenu.value=false
-    }
-}) */
 </script>
 
 <template>
