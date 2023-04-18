@@ -14,6 +14,7 @@ import EbookSettingProgress from './EbookSettingProgress.vue'
 import {useRefreshLocation,useGetLocationHistory,useFlatten} from './hooks/refreshLocation'
 import EbookSlide from './EbookSlide.vue'
 import type { PackagingMetadataObject } from 'epubjs/types/packaging'
+import type Navigation from 'epubjs/types/navigation'
 
 const route = useRoute()
 const bookStore = useBook()
@@ -162,7 +163,7 @@ const parseBook=()=>{
             bookStore.metadata=metadata
         })
         // 获取电子书的目录以及目录层级
-        bookStore.currentbook?.loaded.navigation.then(({toc}:any)=>{
+        bookStore.currentbook?.loaded.navigation.then(({toc}:Navigation)=>{
             // 数组扁平化，更好操作数据
             let navigation = useFlatten(toc)
             // 获取目录级别，比如说一级目录或者二级目录
@@ -176,6 +177,7 @@ const parseBook=()=>{
             navigation.forEach(i=>{
                 i.lava=find(i)
             })
+            bookStore.navigition=navigation
         })
     })
 }

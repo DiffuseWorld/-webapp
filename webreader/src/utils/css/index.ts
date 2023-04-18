@@ -44,3 +44,8 @@ export const removeAll=()=>{
     removeCss(`http://localhost:80/theme/theme_gold.css`)
     removeCss(`http://localhost:80/theme/theme_night.css`)
 }
+
+export const realPx=(px:number)=>{
+    const Max=window.innerWidth>500?500:window.innerWidth
+    return px*(Max/375)
+}

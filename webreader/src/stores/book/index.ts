@@ -1,6 +1,6 @@
 import {ref} from 'vue'
 import {defineStore} from 'pinia'
-import type{Book} from 'epubjs'
+import type{Book, NavItem} from 'epubjs'
 import type { PackagingMetadataObject } from 'epubjs/types/packaging'
 
 /**
@@ -20,6 +20,7 @@ export const useBook = defineStore('book',()=>{
     let section=ref(0) // 当前章节的位置
     let cover=ref('') // 阅读器侧边栏的小说的图片地址
     let metadata=ref<PackagingMetadataObject>() // 包含了书本信息，比如作者，书名
+    let navigition=ref<NavItem[]>()
     return {
         filename,
         isShow,
@@ -33,6 +34,7 @@ export const useBook = defineStore('book',()=>{
         progress,
         section,
         cover,
-        metadata
+        metadata,
+        navigition
     }
 })

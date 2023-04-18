@@ -3,6 +3,7 @@ import {useBook} from '@/stores'
 import {useHideSlide} from './hooks/refreshLocation'
 import {ref} from 'vue'
 import EbookSlideContent from './EbookSlideContent.vue'
+import EbookLoading from './EbookLoading.vue'
 
 const bookStore = useBook()
 const currentTab=ref(1)
@@ -22,8 +23,8 @@ const toggleTab=(n:number)=>{
 <template>
     <Transition name="fade-slide-right">
         <div class="silde-content-wrapper" v-show="bookStore.isShow && bookStore.settingVisable === 3">
-        <div class="content">
-            <div class="centent-page-wrapper">
+        <div class="content" v-if="bookStore.settingVisable===3">
+            <div class="centent-page-wrapper" v-if="bookStore.bookAvailable">
                 <div class="content-page">
                     <component :is="EbookSlideContent"></component>
                 </div>
@@ -39,6 +40,10 @@ const toggleTab=(n:number)=>{
                         书签
                     </div>
                 </div>
+            </div>
+            <div class="content-empty" v-else>
+                <!-- 加载动画组件 -->
+                <EbookLoading/> 
             </div>
         </div>
         <div class="content-bg" @click.prev="hide()"></div>
@@ -84,6 +89,13 @@ const toggleTab=(n:number)=>{
                     align-items: center;
                 }
             }
+        }
+        .content-empty{
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
         }
     }
     .content-bg{

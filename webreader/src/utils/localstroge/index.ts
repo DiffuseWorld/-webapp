@@ -82,3 +82,4 @@ export const getReadTime=(filename:string)=>{
 export const saveReadTime=(filename:string,value:any)=>{
     return setBookObject(filename,'readtime',value)
 }
+

@@ -11,8 +11,9 @@ export const useRefreshLocation=()=>{
     bookstore.progress=Math.floor((progressval as number)*100)
      // 用来持久化进度条的数据
     const startCfi=(currentLocation as any).start.cfi
-    
     saveLocation(bookstore.filename,startCfi)
+    bookstore.isShow=false
+    bookstore.settingVisable=-1
 }
 
 /**
@@ -65,3 +66,4 @@ export const useGetReadTimeText=()=>{
 export const useFlatten=(arrs:any[]):any[]=>{
     return [].concat(...arrs.map(i=>[].concat(i,...useFlatten(i.subitems) as any[])))
 }
+

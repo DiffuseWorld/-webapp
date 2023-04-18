@@ -11,12 +11,7 @@ const bookstore=useBook()
  * 获取章节名称的计算属性
  */
 const sectionName=computed(()=>{
-    if(bookstore.section){
-        const sectionInfo=bookstore.currentbook?.section(bookstore.section)
-        const sectionNM =bookstore.currentbook?.navigation.get((sectionInfo as any).href).label
-        return sectionNM
-    }
-    return ''
+    return bookstore.section? (bookstore as any).navigition[bookstore.section].label:''
 })
 
 const onProgressChange=()=>{
