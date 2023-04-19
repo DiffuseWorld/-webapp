@@ -30,7 +30,7 @@ export const FONT_FAMILY=[
     {font:'Tangerine'},
 ]
 
-export const themeList=():{name:string;style:{body:{'color':string;'background':string}}}[]=>{
+export const themeList=():{name:string;style:{body:{'color':string;'background':string;'padding-top':string;'padding-bottom':string}}}[]=>{
     return [
         {
             // alias: vue.$t('book.themeDefault'),
@@ -38,7 +38,9 @@ export const themeList=():{name:string;style:{body:{'color':string;'background':
             style:{
                 body:{
                     'color':'#4c5059',
-                    'background':'#cecece'
+                    'background':'#cecece',
+                    'padding-top':`48px !important`,
+                    'padding-bottom':`48px !important`
                 }
             }
         }, {
@@ -47,7 +49,9 @@ export const themeList=():{name:string;style:{body:{'color':string;'background':
             style: {
               body: {
                 'color': '#5c5b56',
-                'background': '#c6c2b6'
+                'background': '#c6c2b6',
+                'padding-top':`48px !important`,
+                    'padding-bottom':`48px !important`
               }
             }
           },
@@ -57,7 +61,9 @@ export const themeList=():{name:string;style:{body:{'color':string;'background':
             style: {
               body: {
                 'color': '#404c42',
-                'background': '#a9c1a9'
+                'background': '#a9c1a9',
+                'padding-top':`48px !important`,
+                    'padding-bottom':`48px !important`
               }
             }
           },
@@ -67,7 +73,9 @@ export const themeList=():{name:string;style:{body:{'color':string;'background':
             style: {
               body: {
                 'color': '#cecece',
-                'background': '#000000'
+                'background': '#000000',
+                'padding-top':`48px !important`,
+                    'padding-bottom':`48px !important`
               }
             }
           }

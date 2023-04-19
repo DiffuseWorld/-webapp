@@ -21,6 +21,8 @@ export const useBook = defineStore('book',()=>{
     let cover=ref('') // 阅读器侧边栏的小说的图片地址
     let metadata=ref<PackagingMetadataObject>() // 包含了书本信息，比如作者，书名
     let navigition=ref<NavItem[]>()
+    let offsetY=ref(0) // 或取阅读器表面mask上的touchevent的偏移量
+    let isBookMask=ref<boolean>()
     return {
         filename,
         isShow,
@@ -35,6 +37,8 @@ export const useBook = defineStore('book',()=>{
         section,
         cover,
         metadata,
-        navigition
+        navigition,
+        offsetY,
+        isBookMask
     }
 })

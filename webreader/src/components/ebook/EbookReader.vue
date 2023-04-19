@@ -24,7 +24,8 @@ const touchObj = {
     touchStartX: 0,
     timestamp: 0
 }
-
+const firstOffsetY=ref<any>()
+const mouseState=ref(-1)
 
 /**
  * epub电子书的阅读器
@@ -117,6 +118,7 @@ const initEpub = () => {
         // e.preventDefault()
         e.stopPropagation()
     })
+    
 }
 const prePage = () => {
     renditon.value?.prev()
@@ -181,6 +183,66 @@ const parseBook=()=>{
         })
     })
 }
+const onMaskClick=(e:MouseEvent)=>{
+    if(mouseState.value && (mouseState.value===2||mouseState.value===3)){
+        return
+    }
+    const offsetX=e.offsetX
+    const width = window.innerWidth
+    if(offsetX>0 && offsetX <width*0.3){
+        prePage()
+    }else if(offsetX > 0 && offsetX > width*0.7){
+        nextPgae()
+    } else{
+        toggleTitleAndMenu()
+    }
+}
+const move=(e:TouchEvent)=>{
+    let offset=0
+    if(firstOffsetY.value){
+        offset=e.changedTouches[0].clientY - firstOffsetY.value
+        bookStore.offsetY=offset
+    }else {
+        firstOffsetY.value=e.changedTouches[0].clientY
+    }
+    e.preventDefault()
+    e.stopPropagation()
+}
+const moveEnd=(e:TouchEvent)=>{
+    bookStore.offsetY=0
+    firstOffsetY.value=null
+}
+const onMouseEnd=(e:MouseEvent)=>{
+    if(mouseState.value===2){{
+        mouseState.value=3
+        bookStore.offsetY=0
+    firstOffsetY.value=null
+    }}else{
+        mouseState.value=4
+    }
+    e.preventDefault()
+    e.stopPropagation()
+}
+const onMosueMove=(e:MouseEvent)=>{
+    if(mouseState.value===1){
+        mouseState.value=2
+    }else if(mouseState.value === 2) {
+        let offset = 0
+        if (firstOffsetY.value) {
+            offset = e.clientY - firstOffsetY.value
+            bookStore.offsetY = offset
+        } else {
+            firstOffsetY.value = e.clientY
+        }
+    }
+    e.preventDefault()
+    e.stopPropagation()
+}
+const onMouseEnter=(e:MouseEvent)=>{
+    mouseState.value=1
+    e.stopPropagation()
+    e.preventDefault()
+}
 </script>
 
 <template>
@@ -188,6 +250,12 @@ const parseBook=()=>{
     <div class="ebook-reader">
         <div id="read">
         </div>
+        <div 
+        class="ebook-reader-mask"
+        @click="onMaskClick"
+        @touchmove="move"
+        @touchend="moveEnd"
+        ></div>
     </div>
     <EbookMenu />
     <EbookSettingFontPopup />
@@ -200,6 +268,16 @@ const parseBook=()=>{
 .ebook-reader {
     height: 100%;
     width: 100%;
+    overflow: hidden;
+    .ebook-reader-mask{
+        position: absolute;
+        top: 0;
+        left: 0;
+        background: transparent;
+        z-index: 150;
+        width: 100%;
+        height: 100%;
+    }
 }
 
 #read {

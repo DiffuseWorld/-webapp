@@ -83,3 +83,10 @@ export const saveReadTime=(filename:string,value:any)=>{
     return setBookObject(filename,'readtime',value)
 }
 
+export const saveBookmark=(filename:string,value:any)=>{
+    setBookObject(filename,'bookmark',value)
+}
+
+export const getBookmark=(filename:string)=>{
+    return getBookObject(filename,'bookmark')
+}

@@ -1,5 +1,5 @@
 import {useBook} from '@/stores'
-import {saveLocation,getLocation,getReadTime} from '@/utils'
+import {saveLocation,getLocation,getReadTime,getBookmark} from '@/utils'
 
 /**
  * 持久化进度条的数据的hook
@@ -14,6 +14,18 @@ export const useRefreshLocation=()=>{
     saveLocation(bookstore.filename,startCfi)
     bookstore.isShow=false
     bookstore.settingVisable=-1
+    const bookmark=getBookmark(bookstore.filename)
+    if(bookmark){
+        if(bookmark.some((i:any)=>{
+            return i.cfi === startCfi
+        })){
+            bookmark.isBookMask=true
+        }else{
+            bookmark.isBookMask=false
+        }
+    }else{
+        bookstore.isBookMask=false
+    }
 }
 
 /**
